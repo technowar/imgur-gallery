@@ -4,3 +4,11 @@
   top: 50%;
   transform: translate(-50%, -50%);
 }
+
+.menu span {
+  padding-right: 10px;
+}
+
+.menu select {
+  display: inline-block;
+}

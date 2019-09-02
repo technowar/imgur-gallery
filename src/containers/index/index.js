@@ -1,12 +1,15 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, {
+  Suspense, lazy, useCallback, useEffect, useState,
+} from 'react';
 import LOADER_TOGGLE from 'constants';
 import { UseStateValue } from 'provider';
 import { getAlbums } from 'services/imgur';
 import './styles.css';
 
 export default function Index() {
+  const Select = lazy(() => import('components/select'));
   const [, dispatch] = UseStateValue();
-  const [galleries, setGalleries] = useState([]);
+  const [albums, setAlbums] = useState([]);
   const authorizeApplication = useCallback(async () => {
     try {
       const {
@@ -15,7 +18,7 @@ export default function Index() {
         },
       } = await getAlbums();
 
-      setGalleries(data);
+      setAlbums(data);
 
       dispatch({
         type: LOADER_TOGGLE,
@@ -39,18 +42,14 @@ export default function Index() {
     authorizeApplication();
   }, [authorizeApplication, dispatch]);
 
-  let Galleries = '';
-
-  if (galleries.length) {
-    Galleries = 'Jumps';
-  }
-
   return (
-    <div className="menu">
-      <span>
-        QUICK BROWN FOX
-        {Galleries}
-      </span>
-    </div>
+    <Suspense fallback={null}>
+      {albums.length ? (
+        <div className="menu">
+          <span>QUICK BROWN FOX</span>
+          <Select albums={albums} />
+        </div>
+      ) : null}
+    </Suspense>
   );
 }
