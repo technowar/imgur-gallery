@@ -2,7 +2,9 @@ import React, { createContext, useContext, useReducer } from 'react';
 import PropTypes from 'prop-types';
 
 const InitialState = {
-  albums: [],
+  loader: {
+    showLoader: false,
+  },
 };
 const Store = createContext();
 const UseStateValue = () => useContext(Store);

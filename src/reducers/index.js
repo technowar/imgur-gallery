@@ -1,5 +1,5 @@
-import GalleryReducer from './gallery';
+import LoaderReducer from './loader';
 
-export default ({ gallery }, action) => ({
-  gallery: GalleryReducer(gallery, action),
+export default ({ loader }, action) => ({
+  loader: LoaderReducer(loader, action),
 });

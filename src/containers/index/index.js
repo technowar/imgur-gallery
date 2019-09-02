@@ -1,8 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { getAlbums } from 'services/photos';
+import LOADER_TOGGLE from 'constants';
+import { UseStateValue } from 'provider';
+import { getAlbums } from 'services/imgur';
 import './styles.css';
 
 export default function Index() {
+  const [, dispatch] = UseStateValue();
   const [galleries, setGalleries] = useState([]);
   const authorizeApplication = useCallback(async () => {
     try {
@@ -14,15 +17,27 @@ export default function Index() {
 
       setGalleries(data);
 
-      console.log(data);
+      dispatch({
+        type: LOADER_TOGGLE,
+        payload: {
+          showLoader: false,
+        },
+      });
     } catch (error) {
       console.log(error);
     }
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
+    dispatch({
+      type: LOADER_TOGGLE,
+      payload: {
+        showLoader: true,
+      },
+    });
+
     authorizeApplication();
-  }, [authorizeApplication]);
+  }, [authorizeApplication, dispatch]);
 
   let Galleries = '';
 
