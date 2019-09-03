@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getSessionStorage } from 'helpers';
+import { deleteSessionStorage, getSessionStorage } from 'helpers';
 
 const client = axios.create({
   baseURL: 'https://api.imgur.com',
@@ -23,5 +23,19 @@ client.interceptors.request.use((config) => {
 
   return clientConfig;
 }, (error) => Promise.reject(error));
+
+client.interceptors.response.use((response) => response, (err) => {
+  const {
+    data: {
+      data: {
+        error,
+      },
+    },
+  } = err.response;
+
+  deleteSessionStorage('client');
+
+  return Promise.reject(error);
+});
 
 export default client;

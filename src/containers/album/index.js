@@ -1,9 +1,12 @@
-import React, { useCallback, useEffect } from 'react';
+import React, {
+  Suspense, lazy, useCallback, useEffect, useState,
+} from 'react';
 import Constants from 'constants';
 import { UseStateValue } from 'provider';
 import { getImages } from 'services/imgur';
 
 export default function Album(prop) {
+  const Gallery = lazy(() => import('components/gallery'));
   const {
     history,
   } = prop;
@@ -12,6 +15,7 @@ export default function Album(prop) {
       id,
     },
   }, dispatch] = UseStateValue();
+  const [images, setImages] = useState([]);
   const retrieveImages = useCallback(async (albumId) => {
     try {
       const {
@@ -20,7 +24,7 @@ export default function Album(prop) {
         },
       } = await getImages(albumId);
 
-      console.log(data);
+      setImages(data);
 
       dispatch({
         type: Constants.LOADER_TOGGLE,
@@ -49,6 +53,10 @@ export default function Album(prop) {
   }, [dispatch, history, id, retrieveImages]);
 
   return (
-    <h1>ALBUM</h1>
+    <Suspense fallback={null}>
+      {images.length ? (
+        <Gallery images={images} />
+      ) : null }
+    </Suspense>
   );
 }

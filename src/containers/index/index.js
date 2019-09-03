@@ -8,10 +8,10 @@ import { getAlbums } from 'services/imgur';
 import './styles.css';
 
 export default function Index(props) {
+  const Select = lazy(() => import('components/select'));
   const {
     history,
   } = props;
-  const Select = lazy(() => import('components/select'));
   const [, dispatch] = UseStateValue();
   const [albums, setAlbums] = useState([]);
   const retrieveAlbums = useCallback(async () => {
@@ -53,7 +53,11 @@ export default function Index(props) {
         id: evt.target.options[evt.target.selectedIndex].getAttribute('data-id'),
       },
     });
-    history.push(evt.target.options[evt.target.selectedIndex].value);
+
+    history.push(evt.target
+      .options[evt.target.selectedIndex]
+      .value.replace(/[^A-Z0-9]+/ig, ' ')
+      .trim().replace(/\s+/g, '-').toLowerCase());
   }
 
   return (
