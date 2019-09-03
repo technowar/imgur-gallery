@@ -1,5 +1,7 @@
 import React, { useCallback, useEffect } from 'react';
+import Constants from 'constants';
 import { UseStateValue } from 'provider';
+import { getImages } from 'services/imgur';
 
 export default function Album(prop) {
   const {
@@ -9,22 +11,42 @@ export default function Album(prop) {
     album: {
       id,
     },
-  }] = UseStateValue();
-  const cb = useCallback(async (albumId) => {
+  }, dispatch] = UseStateValue();
+  const retrieveImages = useCallback(async (albumId) => {
     try {
-      console.log(albumId);
+      const {
+        data: {
+          data,
+        },
+      } = await getImages(albumId);
+
+      console.log(data);
+
+      dispatch({
+        type: Constants.LOADER_TOGGLE,
+        payload: {
+          showLoader: false,
+        },
+      });
     } catch (error) {
       console.log(error);
     }
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (!id) {
       history.push('/');
     } else {
-      cb(id);
+      dispatch({
+        type: Constants.LOADER_TOGGLE,
+        payload: {
+          showLoader: true,
+        },
+      });
+
+      retrieveImages(id);
     }
-  }, [cb, history, id]);
+  }, [dispatch, history, id, retrieveImages]);
 
   return (
     <h1>ALBUM</h1>

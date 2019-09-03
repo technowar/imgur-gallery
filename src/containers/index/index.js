@@ -2,7 +2,7 @@ import React, {
   Suspense, lazy, useCallback, useEffect, useState,
 } from 'react';
 import PropTypes from 'prop-types';
-import LOADER_TOGGLE from 'constants';
+import Constants from 'constants';
 import { UseStateValue } from 'provider';
 import { getAlbums } from 'services/imgur';
 import './styles.css';
@@ -14,7 +14,7 @@ export default function Index(props) {
   const Select = lazy(() => import('components/select'));
   const [, dispatch] = UseStateValue();
   const [albums, setAlbums] = useState([]);
-  const authorizeApplication = useCallback(async () => {
+  const retrieveAlbums = useCallback(async () => {
     try {
       const {
         data: {
@@ -25,7 +25,7 @@ export default function Index(props) {
       setAlbums(data);
 
       dispatch({
-        type: LOADER_TOGGLE,
+        type: Constants.LOADER_TOGGLE,
         payload: {
           showLoader: false,
         },
@@ -37,21 +37,31 @@ export default function Index(props) {
 
   useEffect(() => {
     dispatch({
-      type: LOADER_TOGGLE,
+      type: Constants.LOADER_TOGGLE,
       payload: {
         showLoader: true,
       },
     });
 
-    authorizeApplication();
-  }, [authorizeApplication, dispatch]);
+    retrieveAlbums();
+  }, [dispatch, retrieveAlbums]);
+
+  function onChangeSelect(evt) {
+    dispatch({
+      type: Constants.ALBUM_SET,
+      payload: {
+        id: evt.target.options[evt.target.selectedIndex].getAttribute('data-id'),
+      },
+    });
+    history.push(evt.target.options[evt.target.selectedIndex].value);
+  }
 
   return (
     <Suspense fallback={null}>
       {albums.length ? (
         <div className="menu">
           <span>QUICK BROWN FOX</span>
-          <Select albums={albums} history={history} />
+          <Select options={albums} onChange={onChangeSelect} />
         </div>
       ) : null}
     </Suspense>

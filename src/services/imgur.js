@@ -4,8 +4,8 @@ function getAlbums() {
   return client.get('/3/account/J4hmTor/albums');
 }
 
-function getImages() {
-  console.log('Get Images');
+function getImages(albumId) {
+  return client.get(`/3/album/${albumId}/images`);
 }
 
 export {

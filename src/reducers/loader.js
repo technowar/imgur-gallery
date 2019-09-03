@@ -1,9 +1,10 @@
-import LOADER_TOGGLE from 'constants';
+import Constants from 'constants';
 
 export default (state, action) => {
   switch (action.type) {
-    case LOADER_TOGGLE:
+    case Constants.LOADER_TOGGLE:
       return {
+        ...state,
         ...action.payload,
       };
     default:

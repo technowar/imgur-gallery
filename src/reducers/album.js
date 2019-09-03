@@ -1,9 +1,10 @@
-import ALBUM_SET from 'constants';
+import Constants from 'constants';
 
 export default (state, action) => {
   switch (action.type) {
-    case ALBUM_SET:
+    case Constants.ALBUM_SET:
       return {
+        ...state,
         ...action.payload,
       };
     default:

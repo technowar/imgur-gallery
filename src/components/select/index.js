@@ -1,31 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ALBUM_SET from 'constants';
-import { UseStateValue } from 'provider';
 
 export default function Select(props) {
   const {
-    albums,
-    history,
+    options,
+    onChange,
   } = props;
-  const [, dispatch] = UseStateValue();
-
-  function onChangeSelect(evt) {
-    dispatch({
-      type: ALBUM_SET,
-      payload: {
-        id: evt.target.options[evt.target.selectedIndex].getAttribute('data-id'),
-      },
-    });
-    history.push(evt.target.options[evt.target.selectedIndex].value);
-  }
 
   return (
-    <select onChange={onChangeSelect}>
+    <select onChange={onChange}>
       <option value="">SELECT</option>
-      {albums.map((album) => (
-        <option key={album.id} value={album.title} data-id={album.id}>
-          {album.title}
+      {options.map((option) => (
+        <option key={option.id} value={option.title} data-id={option.id}>
+          {option.title}
         </option>
       ))}
     </select>
@@ -33,6 +20,6 @@ export default function Select(props) {
 }
 
 Select.propTypes = {
-  albums: PropTypes.instanceOf(Array).isRequired,
-  history: PropTypes.instanceOf(Object).isRequired,
+  options: PropTypes.instanceOf(Array).isRequired,
+  onChange: PropTypes.instanceOf(Function).isRequired,
 };
