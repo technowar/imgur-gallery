@@ -2,6 +2,9 @@ import React, { createContext, useContext, useReducer } from 'react';
 import PropTypes from 'prop-types';
 
 const InitialState = {
+  album: {
+    id: '',
+  },
   loader: {
     showLoader: false,
   },

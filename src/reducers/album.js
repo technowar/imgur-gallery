@@ -1,8 +1,8 @@
-import LOADER_TOGGLE from 'constants';
+import ALBUM_SET from 'constants';
 
 export default (state, action) => {
   switch (action.type) {
-    case LOADER_TOGGLE:
+    case ALBUM_SET:
       return {
         ...action.payload,
       };
