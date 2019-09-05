@@ -27,7 +27,7 @@ export default function Index(props) {
       dispatch({
         type: Constants.LOADER_TOGGLE,
         payload: {
-          showLoader: false,
+          toggleLoader: false,
         },
       });
     } catch (error) {
@@ -39,7 +39,7 @@ export default function Index(props) {
     dispatch({
       type: Constants.LOADER_TOGGLE,
       payload: {
-        showLoader: true,
+        toggleLoader: true,
       },
     });
 

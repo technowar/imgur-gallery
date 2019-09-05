@@ -4,19 +4,24 @@ import './styles.css';
 
 export default (BaseComponent) => {
   function LayoutComponent(props) {
+    const Lightbox = lazy(() => import('components/lightbox'));
     const Loader = lazy(() => import('components/loader'));
-    const [state] = UseStateValue();
-    const {
-      loader: {
-        showLoader,
+    const [{
+      lightbox: {
+        image,
+        toggleLightbox,
       },
-    } = state;
+      loader: {
+        toggleLoader,
+      },
+    }] = UseStateValue();
 
     return (
       <>
         <BaseComponent {...props} />
         <Suspense fallback={null}>
-          {showLoader ? <Loader /> : null}
+          {toggleLightbox ? <Lightbox image={image} /> : null}
+          {toggleLoader ? <Loader /> : null}
         </Suspense>
       </>
     );

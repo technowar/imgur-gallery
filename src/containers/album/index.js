@@ -29,7 +29,7 @@ export default function Album(prop) {
       dispatch({
         type: Constants.LOADER_TOGGLE,
         payload: {
-          showLoader: false,
+          toggleLoader: false,
         },
       });
     } catch (error) {
@@ -44,7 +44,7 @@ export default function Album(prop) {
       dispatch({
         type: Constants.LOADER_TOGGLE,
         payload: {
-          showLoader: true,
+          toggleLoader: true,
         },
       });
 
@@ -55,7 +55,13 @@ export default function Album(prop) {
   function onClickImage(evt, image) {
     evt.preventDefault();
 
-    console.log(image);
+    dispatch({
+      type: Constants.LIGHTBOX_TOGGLE,
+      payload: {
+        image,
+        toggleLightbox: true,
+      },
+    });
   }
 
   return (

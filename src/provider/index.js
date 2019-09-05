@@ -5,8 +5,12 @@ const InitialState = {
   album: {
     id: '',
   },
+  lightbox: {
+    image: {},
+    toggleLightbox: false,
+  },
   loader: {
-    showLoader: false,
+    toggleLoader: false,
   },
 };
 const Store = createContext();
