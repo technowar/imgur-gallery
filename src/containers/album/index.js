@@ -52,10 +52,16 @@ export default function Album(prop) {
     }
   }, [dispatch, history, id, retrieveImages]);
 
+  function onClickImage(evt, image) {
+    evt.preventDefault();
+
+    console.log(image);
+  }
+
   return (
     <Suspense fallback={null}>
       {images.length ? (
-        <Gallery images={images} />
+        <Gallery images={images} onClick={onClickImage} />
       ) : null }
     </Suspense>
   );
