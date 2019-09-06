@@ -8,7 +8,7 @@ import { getSessionStorage, setSessionStorage } from 'helpers';
 
 export default () => {
   if (!getSessionStorage('client')) {
-    setSessionStorage('client', Config.clientId);
+    setSessionStorage('client', Config.clientId || process.env.REACT_APP_IMGUR_CLIENT_ID);
   }
 
   return (
