@@ -12,6 +12,8 @@ export default function Lightbox(props) {
   const ref = useRef(null);
 
   function onClickOutside(evt) {
+    evt.preventDefault();
+
     if (ref.current && !ref.current.contains(evt.target)) {
       dispatch({
         type: Constants.LIGHTBOX_TOGGLE,
@@ -24,10 +26,12 @@ export default function Lightbox(props) {
   }
 
   useEffect(() => {
-    document.addEventListener('click', onClickOutside);
+    const event = 'ontouchstart' in window ? 'touchstart' : 'click';
+
+    document.addEventListener(event, onClickOutside);
 
     return () => {
-      document.removeEventListener('click', onClickOutside);
+      document.removeEventListener(event, onClickOutside);
     };
   });
 
