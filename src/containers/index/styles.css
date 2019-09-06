@@ -1,0 +1,16 @@
+.menu {
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+}
+
+.menu span {
+  padding-right: 10px;
+}
+
+.menu select {
+  display: inline-block;
+}
