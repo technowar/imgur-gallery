@@ -64,7 +64,7 @@ export default function Index(props) {
     <Suspense fallback={null}>
       {albums.length ? (
         <div className="menu">
-          <span>QUICK BROWN FOX</span>
+          <span>THE QUICK BROWN FOX JUMPS OVER</span>
           <Select options={albums} onChange={onChangeSelect} />
         </div>
       ) : null}
