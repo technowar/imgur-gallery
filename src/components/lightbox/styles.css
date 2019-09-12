@@ -8,16 +8,18 @@
   z-index: 1;
 }
 
-.lightbox .img {
+.lightbox .inner-lightbox {
   left: 50%;
   position: absolute;
+  text-align: center;
   top: 50%;
   transform: translate(-50%, -50%);
+  width: 75%;
   -moz-transform: translate(-50%, -50%);
   -webkit-transform: translate(-50%, -50%);
 }
 
-.lightbox .image-details {
+.lightbox .inner-lightbox .image-details {
   bottom: 50px;
   left: 50%;
   position: absolute;
@@ -26,7 +28,7 @@
   -webkit-transform: translate(-50%, -50%);
 }
 
-.lightbox .image-details span {
+.lightbox .inner-lightbox .image-details span {
   font-size: 10pt;
   letter-spacing: 0.15em;
   text-transform: uppercase;

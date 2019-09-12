@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
+import { UseStateValue } from 'provider';
 import './styles.css';
 
 export default function Gallery(props) {
@@ -7,14 +8,35 @@ export default function Gallery(props) {
     images,
     onClick,
   } = props;
+  const ref = useRef(null);
+  const [{
+    scroll: {
+      scrollY,
+    },
+  }] = UseStateValue();
+
+  function onScrollWindow(evt) {
+    if (ref.current && !ref.current.contains(evt.target)) {
+      document.documentElement.style.setProperty('--scroll-y', `${window.scrollY}px`);
+    }
+  }
+
+  useEffect(() => {
+    window.scrollTo(0, parseInt(scrollY || '0', 10));
+    window.addEventListener('scroll', onScrollWindow);
+
+    return () => {
+      window.removeEventListener('scroll', onScrollWindow);
+    };
+  }, [scrollY]);
 
   return (
-    <section className="images">
-      {images.map((image) => (
+    <section className="images" ref={ref}>
+      {images.map((image, index) => (
         <div
           className="content"
           role="button"
-          tabIndex="0"
+          tabIndex={index}
           key={image.id}
           onClick={(evt) => onClick(evt, image)}
           onKeyUp={(evt) => onClick(evt, image)}

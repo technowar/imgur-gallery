@@ -56,6 +56,12 @@ export default function Album(prop) {
     evt.preventDefault();
 
     dispatch({
+      type: Constants.SCROLL_SET,
+      payload: {
+        scrollY: document.documentElement.style.getPropertyValue('--scroll-y'),
+      },
+    });
+    dispatch({
       type: Constants.LIGHTBOX_TOGGLE,
       payload: {
         image,

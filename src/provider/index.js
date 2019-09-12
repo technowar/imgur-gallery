@@ -12,6 +12,9 @@ const InitialState = {
   loader: {
     toggleLoader: false,
   },
+  scroll: {
+    scrollY: 0,
+  },
 };
 const Store = createContext();
 const UseStateValue = () => useContext(Store);

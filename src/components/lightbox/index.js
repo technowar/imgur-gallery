@@ -8,7 +8,11 @@ export default function Lightbox(props) {
   const {
     image,
   } = props;
-  const [, dispatch] = UseStateValue();
+  const [{
+    scroll: {
+      scrollY,
+    },
+  }, dispatch] = UseStateValue();
 
   function onClickOutside(evt) {
     evt.preventDefault();
@@ -25,18 +29,24 @@ export default function Lightbox(props) {
   useEffect(() => {
     const event = 'ontouchstart' in window ? 'touchstart' : 'click';
 
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${scrollY}`;
     document.addEventListener(event, onClickOutside);
 
     return () => {
+      document.body.style.position = '';
+      document.body.style.top = '';
       document.removeEventListener(event, onClickOutside);
     };
   });
 
   return (
     <div className="lightbox">
-      <img className="img" src={image.link} alt={image.id} />
-      <div className="image-details">
-        <span>{image.description}</span>
+      <div className="inner-lightbox">
+        <img src={image.link} alt={image.id} />
+        <div className="image-details">
+          <span>{image.description}</span>
+        </div>
       </div>
     </div>
   );
